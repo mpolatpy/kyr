@@ -21,13 +21,13 @@ describe('UserCard Component Tests', () => {
 
         const mockProps = {
             user: mockUser,
-            deleteUser: mockDispatch
+            dispatch: mockDispatch
         }
 
         wrapper = rdxRender(
             <Router location={history.location} navigator={history}>
                 <UserCard {...mockProps} />
-            </Router>, 
+            </Router>,
             {});
     })
 
@@ -36,7 +36,7 @@ describe('UserCard Component Tests', () => {
     });
 
     test('Edit Icon should be in the document and navigate to user edit page', () => {
-        const editIcon = screen.getByRole('link', {name: 'edit-details'});
+        const editIcon = screen.getByRole('link', { name: 'edit-details' });
         expect(editIcon).toBeInTheDocument();
 
         fireEvent.click(editIcon)
@@ -44,7 +44,7 @@ describe('UserCard Component Tests', () => {
     });
 
     test('Delete Icon should be in the document', () => {
-        const deleteIcon = screen.getByRole('button', {name: 'delete-user'});
+        const deleteIcon = screen.getByRole('button', { name: 'delete-user' });
         expect(deleteIcon).toBeInTheDocument();
     });
 

@@ -2,9 +2,7 @@ import React, { useEffect } from "react";
 import { connect } from "react-redux";
 import { Routes, Route } from "react-router-dom";
 import { createStructuredSelector } from 'reselect';
-import {
-  selectUserList, selectIsUsersLoading, selectIsUsersLoaded
-} from './redux/users/usersSelectors';
+import {selectUserList, selectIsUsersLoading} from './redux/users/usersSelectors';
 import { fetchUsers } from "./redux/users/usersActions";
 import Header from './components/header/Header';
 import "./App.css";
@@ -14,13 +12,11 @@ import UserForm from "./pages/user-form/UserForm";
 import CustomAlert from './components/custom-alert/CustomAlert';
 import Loader from './components/Loader/Loader';
 
-function App({ isUsersLoaded, fetchUsers, isLoading }) {
+function App({ fetchUsers, isLoading }) {
 
   useEffect(() => {
-    if (!isUsersLoaded) {
-      fetchUsers();
-    }
-  }, []);
+    fetchUsers();
+  }, [fetchUsers]);
 
   if (isLoading) {
     return (<Loader />);
@@ -43,7 +39,6 @@ function App({ isUsersLoaded, fetchUsers, isLoading }) {
 const mapStateToProps = createStructuredSelector({
   users: selectUserList,
   isLoading: selectIsUsersLoading,
-  isUsersLoaded: selectIsUsersLoaded
 });
 
 const mapDispatchToProps = (dispatch) => ({
