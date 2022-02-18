@@ -1,0 +1,26 @@
+.App-logo {
+    height: 80px;
+}
+
+.App-header {
+    background-color: rgb(0, 184, 222);
+    height: 180px;
+    padding: 20px;
+    color: white;
+    text-align: center;
+}
+
+.App-title {
+    font-size: 1.5em;
+}
+
+.App-link {
+    color: white;
+    text-decoration: none;
+}
+
+.App-links {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+}
