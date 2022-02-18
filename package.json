@@ -29,7 +29,8 @@
     "@testing-library/jest-dom": "^5.16.2",
     "@testing-library/react": "^12.1.2",
     "@testing-library/user-event": "^13.5.0",
-    "json-server": "^0.17.0"
+    "json-server": "^0.17.0",
+    "redux-mock-store": "^1.5.4"
   },
   "browserslist": {
     "production": [

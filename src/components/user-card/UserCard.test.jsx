@@ -1,17 +1,29 @@
 import React from 'react';
 import '@testing-library/jest-dom'
-import { screen, fireEvent } from '@testing-library/react';
-import { rdxRender } from '../../utils/test-utils';
+import { render, screen, fireEvent } from '@testing-library/react';
+import thunk from 'redux-thunk'
 import { Router } from "react-router-dom";
 import { createMemoryHistory } from "history";
+import { Provider } from 'react-redux';
+import configureStore from 'redux-mock-store';
 import UserCard from "./UserCard";
 
+const middlewares = [thunk]
+const mockStore = configureStore(middlewares);
+
 describe('UserCard Component Tests', () => {
-    let wrapper, mockDispatch, history;
+    let store, history, component;
 
     beforeEach(() => {
         history = createMemoryHistory();
-        mockDispatch = jest.fn();
+
+        store = mockStore({
+            users: {
+                isLoading: false,
+                users: null,
+                message: undefined
+            },
+        });
 
         const mockUser = {
             name: 'Michael Jordan',
@@ -19,20 +31,19 @@ describe('UserCard Component Tests', () => {
             id: '125'
         }
 
-        const mockProps = {
-            user: mockUser,
-            dispatch: mockDispatch
-        }
+        store.dispatch = jest.fn();
 
-        wrapper = rdxRender(
+        component = render(
             <Router location={history.location} navigator={history}>
-                <UserCard {...mockProps} />
-            </Router>,
-            {});
-    })
+                <Provider store={store}>
+                    <UserCard user={mockUser} />
+                </Provider>
+            </Router>
+        );
+    });
 
     test('it should match snaphot', () => {
-        expect(wrapper).toMatchSnapshot();
+        expect(component).toMatchSnapshot();
     });
 
     test('Edit Icon should be in the document and navigate to user edit page', () => {
@@ -46,6 +57,9 @@ describe('UserCard Component Tests', () => {
     test('Delete Icon should be in the document', () => {
         const deleteIcon = screen.getByRole('button', { name: 'delete-user' });
         expect(deleteIcon).toBeInTheDocument();
+
+        fireEvent.click(deleteIcon);
+        expect(store.dispatch).toHaveBeenCalledTimes(1);
     });
 
-})
+});
